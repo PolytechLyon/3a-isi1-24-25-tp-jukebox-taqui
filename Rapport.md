@@ -1,8 +1,8 @@
 # Compte Rendu TP Jukebox
 
 ## Binôme
-- Nom Prénom
-- Nom Prénom
+- TAQUI Sofian
+- BEN MAAOUIA Ahdi
 
 ## Choix de conception et de réalisation
 
