@@ -16,4 +16,5 @@ Nous avons fixé un format de temps avec la commande "formatTime()" afin d'amél
 pour la barre de lecture, il nous a fallu créer et surtout penser à supprimer un listener afin de ne pas perdre de données.
 
 ## Extensions réalisées (optionnel)
-Nous avons modifié la police du projet grâce à Google Fonts
+Nous avons modifié la police du projet grâce à Google Fonts.
+Nous avons donc amélioré la mise en page de la vue Jukebox afin d'améliorer la lisibilité pour l'utilisateur. 
