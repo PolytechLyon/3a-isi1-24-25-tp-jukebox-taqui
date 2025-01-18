@@ -13,8 +13,10 @@ Concernant l'ajout des titres musicaux via l'explorateur de fichiers, nous avons
 Nous avons fixé un format de temps avec la commande "formatTime()" afin d'améliorer la lisibilité du temps des titres et donc améliorer l'expérience utilisateur.
 
 ## Difficultés rencontrées (optionnel)
-pour la barre de lecture, il nous a fallu créer et surtout penser à supprimer un listener afin de ne pas perdre de données.
+Pour la barre de lecture, il nous a fallu créer et surtout penser à supprimer un listener afin de ne pas perdre de données.
 
 ## Extensions réalisées (optionnel)
 Nous avons modifié la police du projet grâce à Google Fonts.
 Nous avons donc amélioré la mise en page de la vue Jukebox afin d'améliorer la lisibilité pour l'utilisateur. 
+On a réussi à implémenter la fonctionnalité qui permet de savegarder localement que les pistes ajoutées avec un URL.
+Cepandant on a pas réussi à retirer cette fonctionnalité pour la 2ème extension. Donc les pistes ajoutées de manière locales ne sont pas sauvegardées lorsqu'on passe d'une vue à l'autre. On a réussi meme à faire en sorte que meme les fichiers locaux reste d'une vue à l'autre mais il fallait sauvegarder du coté du client le fichier et cela fesait que losqu'on rafraichit la page, le fichier était toujours là. Cela ne répond pas à la première consigne.
