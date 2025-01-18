@@ -1,17 +1,17 @@
-/* 
-  Ce composant est une application de jukebox simple qui permet de gérer une playlist de pistes audio.
-  Il permet de lire, mettre en pause, arrêter, supprimer et ajouter des pistes audio.
-  Il permet également de changer le mode de répétition de la playlist.
-  Il permet d'ajouter des pistes audio à partir d'une URL ou d'un fichier local.
-  Il affiche la progression de la piste en cours de lecture et permet de changer la position de lecture.
+/*
+Ce composant est une application de jukebox simple qui permet de gérer une playlist de pistes audio.
+Il permet de lire, mettre en pause, arrêter, supprimer et ajouter des pistes audio.
+Il permet également de changer le mode de répétition de la playlist.
+Il permet d'ajouter des pistes audio à partir d'une URL ou d'un fichier local.
+Il affiche la progression de la piste en cours de lecture et permet de changer la position de lecture.
 */
 /* La partie HTML*/
 <template>
   <div class="jukebox">
-    
+
     <h1>Jukebox</h1>
     <router-link to="/playlists">Gérer les listes de lecture</router-link>
-    
+
     <!-- Barre de lecture avec le titre du projet -->
     <div v-if="currentTrack" class="now-playing">
       <p>
@@ -25,13 +25,7 @@
           <button @click="stopTrack">Arreter</button>
         </div>
       </div>
-      <input
-        type="range"
-        class="progress-bar"
-        :max="audio.duration || 0"
-        :value="currentTime"
-        @input="seekTrack"
-      />
+      <input type="range" class="progress-bar" :max="audio.duration || 0" :value="currentTime" @input="seekTrack" />
       <div class="time-info">
         {{ formatTime(currentTime) }} / {{ formatTime(audio.duration) }}
       </div>
@@ -111,27 +105,16 @@ export default {
     };
   },
   created() {
-  this.loadPlaylist(); // Charge la playlist depuis le stockage local
-},
+    this.loadPlaylist(); // Charge la playlist depuis le stockage local
+  },
   methods: {
     loadPlaylist() { // Fonction pour charger la playlist
-    const playlists = JSON.parse(localStorage.getItem('playlists')) || [];
-    const selectedPlaylistIndex = JSON.parse(localStorage.getItem('selectedPlaylistIndex')) || 0;
-
-    if (playlists[selectedPlaylistIndex]) {
-      this.playlist = playlists[selectedPlaylistIndex].tracks;
-    } else {
-      this.playlist = [];
-    }
+      const storedPlaylist = JSON.parse(localStorage.getItem('playlist')) || [];
+      this.playlist = storedPlaylist.filter(track => track.src.startsWith('http'));
     },
     savePlaylist() { // Fonction pour sauvegarder la playlist
-    const playlists = JSON.parse(localStorage.getItem('playlists')) || [];
-    const selectedPlaylistIndex = JSON.parse(localStorage.getItem('selectedPlaylistIndex')) || 0;
-
-    if (playlists[selectedPlaylistIndex]) {
-      playlists[selectedPlaylistIndex].tracks = this.playlist;
-      localStorage.setItem('playlists', JSON.stringify(playlists));
-    }
+      const urlTracks = this.playlist.filter(track => track.src.startsWith('http'));
+      localStorage.setItem('playlist', JSON.stringify(urlTracks));
     },
     playTrack(index) { // Fonction pour jouer une piste
       const track = this.playlist[index];
@@ -164,10 +147,10 @@ export default {
     },
     removeTrack(index) { // Fonction pour supprimer une piste
       this.playlist.splice(index, 1);
-    if (this.currentTrack === this.playlist[index]) {
-      this.stopTrack();
-    }
-    this.savePlaylist();
+      if (this.currentTrack === this.playlist[index]) {
+        this.stopTrack();
+      }
+      this.savePlaylist();
     },
     seekTrack(event) { // Fonction pour changer la position de lecture
       const newTime = event.target.value;
@@ -218,52 +201,65 @@ export default {
 </script>
 
 /* La partie CSS */
-<style> 
+<style>
 body {
   font-family: 'Changa', sans-serif;
 }
-h1, h2 {
+
+h1,
+h2 {
   font-family: 'Changa', sans-serif;
-  font-weight: 700; 
+  font-weight: 700;
 }
+
 button {
-  font-family: 'Changa', sans-serif; 
+  font-family: 'Changa', sans-serif;
 }
+
 .jukebox {
   width: 600px;
   margin: 20px auto;
 }
+
 fieldset {
   border: 1px solid #ccc;
   padding: 10px;
 }
+
 ul {
   list-style-type: none;
   padding: 0;
 }
+
 li {
   margin-bottom: 10px;
 }
+
 .error {
   text-decoration: line-through;
   color: red;
 }
+
 button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
+
 .now-playing {
   margin: 20px 0;
   border-top: 1px solid #ccc;
   padding-top: 10px;
   text-align: center;
 }
+
 .now-playing .controls {
   margin: 10px 0;
 }
+
 .progress-bar {
   width: 100%;
 }
+
 .time-info {
   display: flex;
   justify-content: space-between;
@@ -271,21 +267,25 @@ button:disabled {
   font-size: 14px;
   color: #333;
 }
+
 .player-controls {
   display: flex;
   justify-content: center;
-  gap: 10px; 
+  gap: 10px;
 }
+
 .playlist-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
 }
+
 .playlist-controls {
   display: flex;
   gap: 10px;
 }
+
 .add-track-controls {
   display: flex;
   align-items: center;
